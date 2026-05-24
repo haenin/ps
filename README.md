@@ -1,1 +1,1 @@
-- Auto-push repository for solving problems on Baekjoon and Programmers, powered by BaekjoonHub.
+- Auto-push repository for solving problems, powered by BaekjoonHub.
