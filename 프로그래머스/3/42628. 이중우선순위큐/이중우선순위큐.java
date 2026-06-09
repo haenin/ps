@@ -23,8 +23,8 @@ class Solution {
                     int removed = minQ.poll();
                     set.remove(removed);
                 }
-                while(!maxQ.isEmpty() && !set.contains(maxQ.peek())) maxQ.poll();
-                while(!minQ.isEmpty() && !set.contains(minQ.peek())) minQ.poll();
+                if(!maxQ.isEmpty() && !set.contains(maxQ.peek())) maxQ.poll();
+                if(!minQ.isEmpty() && !set.contains(minQ.peek())) minQ.poll();
             }
         }
 
