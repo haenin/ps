@@ -1,35 +1,36 @@
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 class Solution {
     public int[] solution(String[] operations) {
-        int[] answer = {};
-        List<Integer> inputList = new ArrayList<>();
+        PriorityQueue<Integer> minQ = new PriorityQueue<>();
+        PriorityQueue<Integer> maxQ = new PriorityQueue<>(Collections.reverseOrder());
+        HashSet<Integer> set = new HashSet<>(); 
 
-        for(int i = 0; i < operations.length; i++){
-            String inputCheck = operations[i].split(" ")[0];
-            int inputNum = Integer.parseInt(operations[i].split(" ")[1]);
+        for(String op : operations){
+            String cmd = op.split(" ")[0];
+            int num = Integer.parseInt(op.split(" ")[1]);
 
-            if(inputCheck.equals("I")){
-                inputList.add(inputNum);
-            } else if(!inputList.isEmpty()){
-                Collections.sort(inputList);
-                if(inputNum == 1){
-                    inputList.remove(inputList.size()-1);
+            if(cmd.equals("I")){
+                minQ.offer(num);
+                maxQ.offer(num);
+                set.add(num);
+            } else if(!set.isEmpty()){
+                if(num == 1){
+                    int removed = maxQ.poll();
+                    set.remove(removed);
                 } else {
-                    inputList.remove(0);
+                    // 최솟값 삭제
+                    int removed = minQ.poll();
+                    set.remove(removed);
                 }
+                while(!maxQ.isEmpty() && !set.contains(maxQ.peek())) maxQ.poll();
+                while(!minQ.isEmpty() && !set.contains(minQ.peek())) minQ.poll();
             }
         }
 
-        if(inputList.isEmpty()){
-            answer = new int[]{0, 0};
-        } else {
-            Collections.sort(inputList, Collections.reverseOrder());
-            answer = new int[]{inputList.get(0), inputList.get(inputList.size()-1)};
+        if(set.isEmpty()){
+            return new int[]{0, 0};
         }
-
-        return answer;
+        return new int[]{maxQ.peek(), minQ.peek()};
     }
 }
