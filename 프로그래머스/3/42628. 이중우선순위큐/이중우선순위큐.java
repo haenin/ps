@@ -19,12 +19,11 @@ class Solution {
                     int removed = maxQ.poll();
                     set.remove(removed);
                 } else {
-                    // 최솟값 삭제
                     int removed = minQ.poll();
                     set.remove(removed);
                 }
-                if(!maxQ.isEmpty() && !set.contains(maxQ.peek())) maxQ.poll();
-                if(!minQ.isEmpty() && !set.contains(minQ.peek())) minQ.poll();
+                while(!maxQ.isEmpty() && !set.contains(maxQ.peek())) maxQ.poll();
+                while(!minQ.isEmpty() && !set.contains(minQ.peek())) minQ.poll();
             }
         }
 
